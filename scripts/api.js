@@ -1,4 +1,9 @@
 import { DEVTO_BASE_URL, HN_ALGOLIA_URL, DEFAULT_LIMIT } from "./config.js";
+/**
+ *
+ * @param {*} article
+ * @returns
+ */
 
 function normalizeDevtoArticle(article) {
   return {
@@ -16,6 +21,11 @@ function normalizeDevtoArticle(article) {
   };
 }
 
+/**
+ *
+ * @param {*} hit
+ * @returns
+ */
 function normalizeHnAlgoliaHit(hit) {
   return {
     id: `hn-${hit.objectID}`,
@@ -32,28 +42,46 @@ function normalizeHnAlgoliaHit(hit) {
   };
 }
 
+/**
+ *
+ * @param {*} signal
+ * @returns
+ */
 export async function fetchDevtoArticles(signal) {
-  const res = await fetch(`${DEVTO_BASE_URL}?per_page=${DEFAULT_LIMIT}`, { signal });
+  const res = await fetch(`${DEVTO_BASE_URL}?per_page=${DEFAULT_LIMIT}`, {
+    signal,
+  });
   if (!res.ok) throw new Error("Failed to fetch DEV.to articles");
   const data = await res.json();
   return data.map(normalizeDevtoArticle);
 }
 
+/**
+ *
+ * @param {*} signal
+ * @returns
+ */
 export async function fetchHnArticles(signal) {
   const res = await fetch(
     `${HN_ALGOLIA_URL}/search?tags=front_page&hitsPerPage=${DEFAULT_LIMIT}`,
-    { signal }
+    { signal },
   );
   if (!res.ok) throw new Error("Failed to fetch Hacker News articles");
   const data = await res.json();
   return data.hits.map(normalizeHnAlgoliaHit);
 }
 
+/**
+ *
+ * @param {*} query
+ * @param {*} signal
+ * @returns
+ */
 export async function searchDevtoArticles(query, signal) {
   const tag = query.trim().toLowerCase().split(/\s+/)[0];
   const res = await fetch(
     `${DEVTO_BASE_URL}?tag=${encodeURIComponent(tag)}&per_page=${DEFAULT_LIMIT}`,
-    { signal }
+    { signal },
   );
   if (!res.ok) throw new Error("Failed to search DEV.to articles");
   const data = await res.json();
@@ -63,7 +91,7 @@ export async function searchDevtoArticles(query, signal) {
 export async function searchHnArticles(query, signal) {
   const res = await fetch(
     `${HN_ALGOLIA_URL}/search?query=${encodeURIComponent(query)}&tags=story&hitsPerPage=${DEFAULT_LIMIT}`,
-    { signal }
+    { signal },
   );
   if (!res.ok) throw new Error("Failed to search Hacker News");
   const data = await res.json();
