@@ -1,5 +1,7 @@
 # DevLens – Developer News Intelligence Dashboard
 
+**Live Demo**: [kaldrick.tech](https://youtu.be/f5ijaJMQOWE)
+
 ## Project Overview
 
 **DevLens** is a modern, intuitive web application designed specifically for developers, software engineers, tech students, and professionals. It aggregates high-quality developer-focused content from two trusted sources: **DEV.to** and **Hacker News**.
