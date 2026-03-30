@@ -92,3 +92,4 @@ The UI is fully responsive and works great on desktop and mobile.
    ```bash
    git clone <your-repo-url>
    cd devlens
+   npx serve .

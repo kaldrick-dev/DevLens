@@ -1,83 +1,168 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevLens</title>
-    <meta name="description" content="Developer news from DEV.to and Hacker News." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles/main.css" />
-  </head>
-  <body>
-    <header class="app-header">
-      <div class="header-inner">
-        <span class="logo">
-          <img src="assets/icons/DevLens.png" alt="DevLens icon" class="logo-icon" />
-          DevLens
-        </span>
-        <div class="controls" aria-label="Filters and search">
-          <input id="search-input" type="search" placeholder="Search…" autocomplete="off" />
-          <select id="source-filter">
-            <option value="all">All Sources</option>
-            <option value="devto">DEV.to</option>
-            <option value="hn">Hacker News</option>
-          </select>
-          <select id="sort-filter">
-            <option value="newest">Newest</option>
-            <option value="popular">Popular</option>
-            <option value="relevance">Relevance</option>
-          </select>
-        </div>
-      </div>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DevLens</title>
+        <meta
+            name="description"
+            content="Developer news from DEV.to and Hacker News."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="icon" type="image/x-icon" href="assets/icons/DevLens.ico" />
+        <link rel="stylesheet" href="styles/main.css" />
+    </head>
+    <body>
+        <header class="app-header">
+            <div class="header-inner">
+                <span class="logo">
+                    <img
+                        src="assets/icons/DevLens.png"
+                        alt="DevLens icon"
+                        class="logo-icon"
+                    />
+                    DevLens
+                </span>
+                <div class="controls" aria-label="Filters and search">
+                    <input
+                        id="search-input"
+                        type="search"
+                        placeholder="Search…"
+                        autocomplete="off"
+                    />
+                    <select id="source-filter">
+                        <option value="all">All Sources</option>
+                        <option value="devto">DEV.to</option>
+                        <option value="hn">Hacker News</option>
+                    </select>
+                    <select id="sort-filter">
+                        <option value="newest">Newest</option>
+                        <option value="popular">Popular</option>
+                        <option value="relevance">Relevance</option>
+                    </select>
+                    <select id="date-filter">
+                        <option value="all">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+            </div>
+        </header>
 
-    <main class="app-shell">
-      <nav id="lens-tabs" class="lens-tabs" aria-label="Topic lenses">
-        <button class="lens-tab active" data-lens="all">All</button>
-        <button class="lens-tab" data-lens="frontend">Frontend</button>
-        <button class="lens-tab" data-lens="backend">Backend</button>
-        <button class="lens-tab" data-lens="ai">AI / ML</button>
-        <button class="lens-tab" data-lens="devops">DevOps</button>
-        <button class="lens-tab" data-lens="security">Security</button>
-        <button class="lens-tab" data-lens="mobile">Mobile</button>
-        <button class="lens-tab" data-lens="career">Career</button>
-        <button class="lens-tab" data-lens="opensource">Open Source</button>
-      </nav>
+        <main class="app-shell">
+            <nav id="lens-tabs" class="lens-tabs" aria-label="Topic lenses">
+                <button class="lens-tab active" data-lens="all">All</button>
+                <button class="lens-tab" data-lens="frontend">Frontend</button>
+                <button class="lens-tab" data-lens="backend">Backend</button>
+                <button class="lens-tab" data-lens="ai">AI / ML</button>
+                <button class="lens-tab" data-lens="devops">DevOps</button>
+                <button class="lens-tab" data-lens="security">Security</button>
+                <button class="lens-tab" data-lens="mobile">Mobile</button>
+                <button class="lens-tab" data-lens="career">Career</button>
+                <button class="lens-tab" data-lens="opensource">
+                    Open Source
+                </button>
+                <button class="lens-tab" data-lens="saved">Saved</button>
+            </nav>
 
-      <div id="status" class="status" aria-live="polite"></div>
-      <div id="articles-grid" class="articles-grid"></div>
-    </main>
+            <div id="trending-tags" class="trending-tags"></div>
 
-    <template id="article-card-template">
-      <article class="article-card">
-        <div class="article-thumb"></div>
-        <div class="article-body">
-          <div class="article-meta-row">
-            <span class="source-badge"></span>
-            <span class="article-date"></span>
-          </div>
-          <h3 class="article-title"></h3>
-          <p class="article-excerpt"></p>
-          <div class="article-footer">
-            <span class="article-author"></span>
-            <div class="article-footer-right">
-              <span class="article-score"></span>
-              <a class="article-link" target="_blank" rel="noopener noreferrer">↗</a>
+            <div id="status" class="status" aria-live="polite"></div>
+            <div id="articles-grid" class="articles-grid"></div>
+        </main>
+
+        <template id="article-card-template">
+            <article class="article-card">
+                <div class="article-thumb"></div>
+                <div class="article-body">
+                    <div class="article-meta-row">
+                        <span class="source-badge"></span>
+                        <span class="article-date"></span>
+                        <span class="article-read-time"></span>
+                    </div>
+                    <h3 class="article-title"></h3>
+                    <p class="article-excerpt"></p>
+                    <div class="article-tags"></div>
+                    <div class="article-footer">
+                        <span class="article-author"></span>
+                        <div class="article-footer-right">
+                            <span class="article-score"></span>
+                            <button class="article-save-btn" title="Save for later">♡</button>
+                            <button class="article-compare-btn" title="Add to comparison">⊞</button>
+                            <a
+                                class="article-link"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >↗</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </template>
+
+        <div id="article-modal" class="modal-overlay" hidden>
+          <div class="modal">
+            <button class="modal-close" aria-label="Close">✕</button>
+            <img class="modal-thumb" alt="" />
+            <div class="modal-content">
+              <div class="modal-meta-row">
+                <span class="modal-source-badge"></span>
+                <span class="modal-date"></span>
+                <span class="modal-read-time"></span>
+              </div>
+              <h2 class="modal-title"></h2>
+              <p class="modal-excerpt"></p>
+              <div class="modal-tags"></div>
+              <div class="modal-actions">
+                <a class="modal-read-link btn-primary" target="_blank" rel="noopener noreferrer">Read Original ↗</a>
+                <button class="modal-save-btn btn-secondary">Save for Later</button>
+              </div>
             </div>
           </div>
         </div>
-      </article>
-    </template>
 
-    <footer class="app-footer">
-      <span>Powered by</span>
-      <a href="https://dev.to" target="_blank" rel="noopener noreferrer">DEV.to</a>
-      <span class="footer-divider">·</span>
-      <a href="https://news.ycombinator.com" target="_blank" rel="noopener noreferrer">Hacker News</a>
-    </footer>
+        <div id="compare-overlay" class="modal-overlay" hidden>
+          <div class="compare-modal">
+            <div class="compare-modal-header">
+              <span>Side-by-Side Comparison</span>
+              <button id="compare-close" aria-label="Close">✕</button>
+            </div>
+            <div class="compare-modal-grid">
+              <div id="compare-slot-0" class="compare-slot"></div>
+              <div id="compare-slot-1" class="compare-slot"></div>
+            </div>
+          </div>
+        </div>
 
-    <script type="module" src="scripts/app.js"></script>
-  </body>
+        <footer class="app-footer">
+            <span>Powered by</span>
+            <a href="https://dev.to" target="_blank" rel="noopener noreferrer"
+                >DEV.to</a
+            >
+            <span class="footer-divider">·</span>
+            <a
+                href="https://news.ycombinator.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Hacker News</a
+            >
+        </footer>
+
+        <script type="module" src="scripts/app.js"></script>
+
+        <div id="compare-bar" class="compare-bar" hidden>
+          <span id="compare-bar-text"></span>
+          <div class="compare-bar-actions">
+            <button id="compare-view-btn" class="btn-primary" hidden>View Comparison</button>
+            <button id="compare-clear-btn" class="btn-secondary">Clear</button>
+          </div>
+        </div>
+    </body>
 </html>

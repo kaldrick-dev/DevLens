@@ -12,6 +12,7 @@ function normalizeDevtoArticle(article) {
     publishedAt: article.published_at,
     tags: article.tag_list || [],
     thumbnail: article.cover_image || article.social_image || null,
+    readingTime: article.reading_time_minutes || null,
   };
 }
 
@@ -27,6 +28,7 @@ function normalizeHnAlgoliaHit(hit) {
     publishedAt: hit.created_at,
     tags: [],
     thumbnail: null,
+    readingTime: null,
   };
 }
 

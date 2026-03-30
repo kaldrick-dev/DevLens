@@ -21,6 +21,19 @@ function matchesLens(article, lens) {
   return keywords.some((kw) => haystack.includes(kw));
 }
 
+function isWithinRange(publishedAt, range) {
+  if (range === "all") return true;
+  const now = Date.now();
+  const pub = new Date(publishedAt).getTime();
+  if (Number.isNaN(pub)) return true;
+  const diff = now - pub;
+  const DAY = 24 * 60 * 60 * 1000;
+  if (range === "today") return diff <= DAY;
+  if (range === "week") return diff <= 7 * DAY;
+  if (range === "month") return diff <= 30 * DAY;
+  return true;
+}
+
 export function applyFilters(articles, state) {
   let out = [...articles];
 
@@ -28,7 +41,7 @@ export function applyFilters(articles, state) {
     out = out.filter((a) => a.source === state.source);
   }
 
-  if (state.lens !== "all") {
+  if (state.lens !== "all" && state.lens !== "saved") {
     out = out.filter((a) => matchesLens(a, state.lens));
   }
 
@@ -39,6 +52,17 @@ export function applyFilters(articles, state) {
         a.title.toLowerCase().includes(q) ||
         a.excerpt.toLowerCase().includes(q) ||
         (a.tags || []).some((tag) => tag.toLowerCase().includes(q))
+    );
+  }
+
+  if (state.dateRange && state.dateRange !== "all") {
+    out = out.filter((a) => isWithinRange(a.publishedAt, state.dateRange));
+  }
+
+  if (state.selectedTags && state.selectedTags.length > 0) {
+    const selected = state.selectedTags.map((t) => t.toLowerCase());
+    out = out.filter((a) =>
+      (a.tags || []).some((tag) => selected.includes(tag.toLowerCase()))
     );
   }
 
